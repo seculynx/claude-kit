@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "seculynx-diagnostic": {
+      "type": "http",
+      "url": "https://diagnostic.seculynx.com/mcp/"
+    }
+  }
+}

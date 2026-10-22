@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "seculynx",
+  "description": "SecuLynx plugins for Claude: the free cybersecurity diagnostic for SMEs.",
+  "owner": {
+    "name": "SecuLynx",
+    "email": "hello@seculynx.com",
+    "url": "https://seculynx.com"
+  },
+  "plugins": [
+    {
+      "name": "seculynx",
+      "source": "./",
+      "category": "security",
+      "tags": ["cybersecurity", "diagnostic", "report"]
+    }
+  ]
+}

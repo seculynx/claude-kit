@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "seculynx",
+  "displayName": "SecuLynx Cyber Diagnostic",
+  "version": "1.0.0",
+  "description": "Run the free SecuLynx cybersecurity diagnostic from Claude: a passive scan of your domain plus six business scenarios, delivered as a management report and a technical report (PDF).",
+  "author": {
+    "name": "SecuLynx",
+    "email": "hello@seculynx.com",
+    "url": "https://seculynx.com"
+  },
+  "homepage": "https://seculynx.com/en/diagnostic/",
+  "repository": "https://github.com/seculynx/claude-kit",
+  "license": "MIT",
+  "keywords": [
+    "cybersecurity",
+    "diagnostic",
+    "sme",
+    "security-posture",
+    "nis2",
+    "gdpr",
+    "report"
+  ],
+  "privacyPolicyUrl": "https://seculynx.com/en/privacy/",
+  "supportUrl": "https://seculynx.com/en/contact/",
+  "documentationUrl": "https://github.com/seculynx/claude-kit#readme",
+  "icon": "./.claude-plugin/icon.png"
+}

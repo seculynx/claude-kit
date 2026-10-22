@@ -1,0 +1,48 @@
+# Runs on every push and pull request to dev and main. The branch ruleset on
+# main requires this job ("validate") to pass before anything can merge, so a
+# broken manifest never reaches the branch users install from.
+name: Validate
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # Actions are pinned to full commit SHAs, not tags: a tag can be moved,
+      # a SHA cannot. Dependabot keeps them current (see dependabot.yml).
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 22
+
+      - name: Validate plugin and marketplace manifests
+        run: npx --yes @anthropic-ai/claude-code@2.1.308 plugin validate . --strict
+
+      - name: Version is consistent
+        run: |
+          v=$(python3 -c "import json; print(json.load(open('.claude-plugin/plugin.json'))['version'])")
+          grep -q "^## \[$v\]" CHANGELOG.md || { echo "CHANGELOG.md has no entry for $v"; exit 1; }
+
+      - name: No em-dash in user-facing copy
+        run: |
+          if grep -rn $'—' README.md README.fr.md SECURITY.md CONTRIBUTING.md skills/; then
+            echo "Em-dash found: use a comma, a colon or a new sentence instead."; exit 1
+          fi
+
+      - name: Skill package builds for Claude.ai
+        run: |
+          ./scripts/package-skill.sh
+          unzip -l dist/seculynx-diagnostic-skill.zip | grep -q "seculynx-diagnostic/SKILL.md"
